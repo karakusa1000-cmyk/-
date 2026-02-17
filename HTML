@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NovaForge Labs | テクノロジーで未来を設計する</title>
+    <meta
+      name="description"
+      content="NovaForge Labsは、AI・クラウド・データを融合し、次世代のデジタル体験を提供するテックカンパニーです。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="bg-network" aria-hidden="true"></canvas>
+
+    <header class="site-header" id="top">
+      <div class="container nav">
+        <div class="brand">
+          <span class="brand-glow"></span>
+          <a href="#top">NovaForge Labs</a>
+        </div>
+        <nav>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#cases">Case Studies</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="scroll-progress" id="scroll-progress"></div>
+    </header>
+
+    <main>
+      <section class="hero container" id="hero">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Build Beyond Imagination</p>
+          <h1>AIとモーションで、
+            <span>企業の変革を加速する</span>
+          </h1>
+          <p>
+            NovaForge Labsは、インテリジェントなプロダクト開発と高品質な体験設計で、
+            ビジネス課題を価値へ変えるテクノロジーパートナーです。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary magnetic" href="#contact">無料相談を予約</a>
+            <a class="btn btn-ghost magnetic" href="#services">サービスを見る</a>
+          </div>
+          <div class="kpis">
+            <div class="kpi">
+              <strong data-counter="120">0</strong>
+              <span>導入プロジェクト</span>
+            </div>
+            <div class="kpi">
+              <strong data-counter="98">0</strong>
+              <span>顧客満足度(%)</span>
+            </div>
+            <div class="kpi">
+              <strong data-counter="35">0</strong>
+              <span>平均成長率(%)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="orbital-ring ring-1"></div>
+          <div class="orbital-ring ring-2"></div>
+          <div class="orbital-ring ring-3"></div>
+          <div class="core-pulse"></div>
+          <div class="floating-card glass" data-parallax="0.2">
+            <h3>AI Platform</h3>
+            <p>予測分析 / 自動化 / 生成AI統合</p>
+          </div>
+          <div class="floating-card glass alt" data-parallax="0.35">
+            <h3>Cloud Native</h3>
+            <p>Kubernetes / Serverless / IaC</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about container" id="about">
+        <div class="section-head reveal">
+          <p class="eyebrow">Who We Are</p>
+          <h2>最先端技術を、現場で機能する価値へ</h2>
+        </div>
+        <div class="about-grid">
+          <article class="glass tilt-card reveal">
+            <h3>Mission</h3>
+            <p>テクノロジーを「導入」で終わらせず、継続的な競争優位として根付かせます。</p>
+          </article>
+          <article class="glass tilt-card reveal">
+            <h3>Vision</h3>
+            <p>あらゆる企業がデータとAIを自然に活用する社会基盤をつくる。</p>
+          </article>
+          <article class="glass tilt-card reveal">
+            <h3>Approach</h3>
+            <p>戦略設計、PoC、実装、運用改善までをワンチームで支援します。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="services container" id="services">
+        <div class="section-head reveal">
+          <p class="eyebrow">Services</p>
+          <h2>成果に直結するテックサービス</h2>
+        </div>
+        <div class="service-list">
+          <article class="service-card reveal">
+            <h3>AI Transformation</h3>
+            <p>業務プロセスにAIを実装し、意思決定と実行速度を大幅に向上させます。</p>
+          </article>
+          <article class="service-card reveal">
+            <h3>Product Engineering</h3>
+            <p>高速な仮説検証と堅牢な設計で、スケール可能なプロダクトを実現します。</p>
+          </article>
+          <article class="service-card reveal">
+            <h3>Data Intelligence</h3>
+            <p>散在するデータを統合し、リアルタイムでの可視化・予測基盤を構築します。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cases container" id="cases">
+        <div class="section-head reveal">
+          <p class="eyebrow">Case Studies</p>
+          <h2>導入効果を、数字で証明</h2>
+        </div>
+        <div class="case-ticker" id="case-ticker">
+          <div class="ticker-track">
+            <span>FinTech企業: 審査時間を63%削減</span>
+            <span>Eコマース: CVRを2.1倍に改善</span>
+            <span>製造業: 予知保全で停止時間を42%削減</span>
+            <span>ヘルステック: 推論APIを5倍高速化</span>
+            <span>FinTech企業: 審査時間を63%削減</span>
+            <span>Eコマース: CVRを2.1倍に改善</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact container" id="contact">
+        <div class="section-head reveal">
+          <p class="eyebrow">Contact</p>
+          <h2>次の成長曲線を一緒に描きましょう</h2>
+        </div>
+        <form class="contact-form glass reveal" id="contact-form">
+          <label>
+            お名前
+            <input type="text" name="name" placeholder="山田 太郎" required />
+          </label>
+          <label>
+            会社名
+            <input type="text" name="company" placeholder="NovaForge株式会社" required />
+          </label>
+          <label>
+            メールアドレス
+            <input type="email" name="email" placeholder="hello@example.com" required />
+          </label>
+          <label>
+            ご相談内容
+            <textarea name="message" rows="5" placeholder="課題やご要望を記載してください" required></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary magnetic">送信する</button>
+          <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <p>© 2026 NovaForge Labs. All rights reserved.</p>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
