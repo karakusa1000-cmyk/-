@@ -1,0 +1,197 @@
+const scrollProgress = document.getElementById('scroll-progress');
+const revealEls = document.querySelectorAll('.reveal');
+const counters = document.querySelectorAll('[data-counter]');
+const magneticButtons = document.querySelectorAll('.magnetic');
+const parallaxCards = document.querySelectorAll('[data-parallax]');
+const form = document.getElementById('contact-form');
+const formNote = document.getElementById('form-note');
+
+function updateScrollProgress() {
+  const scrolled = window.scrollY;
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = scrollable > 0 ? (scrolled / scrollable) * 100 : 0;
+  scrollProgress.style.width = `${pct}%`;
+}
+
+function setupRevealAnimation() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.18 }
+  );
+
+  revealEls.forEach((el) => observer.observe(el));
+}
+
+function animateCounters() {
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        const el = entry.target;
+        const target = Number(el.dataset.counter);
+        let value = 0;
+        const duration = 1300;
+        const stepTime = 16;
+        const increments = Math.ceil(target / (duration / stepTime));
+
+        const timer = setInterval(() => {
+          value += increments;
+          if (value >= target) {
+            el.textContent = `${target}`;
+            clearInterval(timer);
+            return;
+          }
+          el.textContent = `${value}`;
+        }, stepTime);
+
+        counterObserver.unobserve(el);
+      });
+    },
+    { threshold: 0.7 }
+  );
+
+  counters.forEach((counter) => counterObserver.observe(counter));
+}
+
+function attachMagneticEffect() {
+  magneticButtons.forEach((btn) => {
+    btn.addEventListener('mousemove', (event) => {
+      const rect = btn.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+}
+
+function attachTiltEffect() {
+  const tiltCards = document.querySelectorAll('.tilt-card');
+
+  tiltCards.forEach((card) => {
+    card.addEventListener('mousemove', (event) => {
+      const rect = card.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width;
+      const py = (event.clientY - rect.top) / rect.height;
+      const rx = (py - 0.5) * -8;
+      const ry = (px - 0.5) * 8;
+      card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+
+function setupParallax() {
+  window.addEventListener('mousemove', (event) => {
+    const xRatio = event.clientX / window.innerWidth - 0.5;
+    const yRatio = event.clientY / window.innerHeight - 0.5;
+
+    parallaxCards.forEach((card) => {
+      const speed = Number(card.dataset.parallax);
+      card.style.transform = `translate(${xRatio * speed * 40}px, ${yRatio * speed * 40}px)`;
+    });
+  });
+}
+
+function setupContactForm() {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = new FormData(form).get('name');
+    formNote.textContent = `${name}さん、お問い合わせありがとうございます。1営業日以内にご連絡します。`;
+    form.reset();
+  });
+}
+
+function startBackgroundNetwork() {
+  const canvas = document.getElementById('bg-network');
+  const ctx = canvas.getContext('2d');
+  const points = [];
+  const POINT_COUNT = 55;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function initPoints() {
+    points.length = 0;
+    for (let i = 0; i < POINT_COUNT; i += 1) {
+      points.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    points.forEach((point) => {
+      point.x += point.vx;
+      point.y += point.vy;
+
+      if (point.x < 0 || point.x > canvas.width) point.vx *= -1;
+      if (point.y < 0 || point.y > canvas.height) point.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, 1.7, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(132, 183, 255, 0.8)';
+      ctx.fill();
+    });
+
+    for (let i = 0; i < points.length; i += 1) {
+      for (let j = i + 1; j < points.length; j += 1) {
+        const dx = points[i].x - points[j].x;
+        const dy = points[i].y - points[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 120) {
+          ctx.beginPath();
+          ctx.moveTo(points[i].x, points[i].y);
+          ctx.lineTo(points[j].x, points[j].y);
+          ctx.strokeStyle = `rgba(100, 160, 255, ${0.22 - distance / 800})`;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  initPoints();
+  draw();
+
+  window.addEventListener('resize', () => {
+    resize();
+    initPoints();
+  });
+}
+
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+updateScrollProgress();
+setupRevealAnimation();
+animateCounters();
+attachMagneticEffect();
+attachTiltEffect();
+setupParallax();
+setupContactForm();
+startBackgroundNetwork();
